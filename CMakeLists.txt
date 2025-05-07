@@ -94,6 +94,7 @@ install(TARGETS ${PROJECT_NAME}_btp_data_node
 # Add executable
 add_executable(${PROJECT_NAME}_ca_node
     src/ca_message.cpp
+    src/vam_message.cpp
     src/ca_rx.cpp
 )
 
@@ -253,3 +254,4 @@ install(
 
 # Register the package as an ament package
 ament_package()
+include_directories(/home/vboxuser/colcon_ws/src/v2x_stack/extern/vanetza)
