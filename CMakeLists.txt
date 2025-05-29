@@ -94,7 +94,6 @@ install(TARGETS ${PROJECT_NAME}_btp_data_node
 # Add executable
 add_executable(${PROJECT_NAME}_ca_node
     src/ca_message.cpp
-    src/vam_message.cpp
     src/ca_rx.cpp
 )
 
