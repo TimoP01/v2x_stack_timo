@@ -1,9 +1,9 @@
 #pragma once
 
 #include <rclcpp/rclcpp.hpp>
-#include <vanetza/asn1/cam.hpp>
+#include <vanetza/asn1/vam.hpp>
 #include <v2x_stack_btp/msg/btp_data_indication.hpp>
-#include <ros_etsi_its_msgs/msg/cam.hpp>
+#include <ros_etsi_its_msgs/msg/vam.hpp>
 #include <cstdint>
 
 namespace v2x_stack_btp
