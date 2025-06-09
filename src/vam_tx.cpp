@@ -1,8 +1,8 @@
 #include <memory>
-#include <rclcpp/rclcpp.hpp>
-#include <sensor_msgs/msg/nav_sat_fix.hpp>
-#include <std_msgs/msg/float64.hpp>
-#include <etsi_its_msgs/etsi_its_vam_ts_msgs/msg vam_msg>
+#include "rclcpp/rclcpp.hpp"
+#include "std_msgs/msg/float64.hpp"
+#include "sensor_msgs/msg/nav_sat_fix.hpp"
+#include "etsi_its_msgs/msg/vam.hpp"  // Where is the correct path for vam header?
 
 using std::placeholders::_1;
 
@@ -20,7 +20,7 @@ public:
             "heading", 10, std::bind(&VamTx::heading_update_callback, this, _1));
 
         // Publisher für ros2vam Nachricht
-        vam_pub_ = this->create_publisher<etsi_its_cam_msgs::vam_ts_msgs::VAM>("ros2vam", 10);
+        vam_pub_ = this->create_publisher<etsi_its_msgs::msg::VAM>("ros2vam", 10);
 
         // Timer: alle 1 Sekunde ros2vam Nachricht senden
         timer_ = this->create_wall_timer(
@@ -29,10 +29,11 @@ public:
 
         RCLCPP_INFO(this->get_logger(), "VamTx Node gestartet.");
     }
+
     void publish_custom_vam_message(double latitude, double longitude, double altitude, double heading)
     {
-        
-        etsi_its_cam_msgs::vam_ts_msgs::VAM vam_msg;
+
+        etsi_its_msgs::msg::VAM vam_msg;
         vam_msg.header.value.protocolVersion.value = 3;
         vam_msg.header.value.messageId = 16;
         vam_msg.header.value.stationId.value = ?;
@@ -60,6 +61,7 @@ public:
         RCLCPP_INFO(this->get_logger(), "Custom VAM gesendet: [%.6f, %.6f, %.2f | %.2f°]",
                     vam_msg.latitude, vam_msg.longitude, vam_msg.altitude, vam_msg.heading);
     }
+
 private:
     void position_update_callback(const sensor_msgs::msg::NavSatFix::SharedPtr msg)
     {
@@ -88,7 +90,7 @@ private:
             return;
         }
 
-        etsi_its_cam_msgs::vam_ts_msgs::VAM vam_msg;
+        etsi_its_msgs::msg::VAM vam_msg;
         vam_msg.latitude = latest_latitude_;
         vam_msg.longitude = latest_longitude_;
         vam_msg.altitude = latest_altitude_;
@@ -103,7 +105,7 @@ private:
     // Membervariablen
     rclcpp::Subscription<sensor_msgs::msg::NavSatFix>::SharedPtr position_sub_;
     rclcpp::Subscription<std_msgs::msg::Float64>::SharedPtr heading_sub_;
-    rclcpp::Publisher<etsi_its_cam_msgs::vam_ts_msgs::VAM>::SharedPtr vam_pub_;
+    rclcpp::Publisher<etsi_its_msgs::msg::VAM>::SharedPtr vam_pub_;
     rclcpp::TimerBase::SharedPtr timer_;
 
     double latest_latitude_ = 0.0;
