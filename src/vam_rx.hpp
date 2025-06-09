@@ -17,12 +17,12 @@ public:
 
 private:
     
-    void publish(const vanetza::asn1::r1::Cam);
+    void publish(const vanetza::asn1::r1::Vam);
 
     uint16_t port_;
     rclcpp::Subscription<msg::BtpDataIndication>::SharedPtr sub_btp_;
     //rclcpp::Publisher<ros_etsi_its_msgs::msg::CAM>pub_cam_;
-    std::shared_ptr<rclcpp::Publisher<ros_etsi_its_msgs::msg::CAM>> pub_cam_;
+    std::shared_ptr<rclcpp::Publisher<ros_etsi_its_msgs::msg::VAM>> pub_vam_;
     rclcpp::Node::SharedPtr node_;
 };
 
