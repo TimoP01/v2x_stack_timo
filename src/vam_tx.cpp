@@ -2,7 +2,7 @@
 #include "rclcpp/rclcpp.hpp"
 #include "std_msgs/msg/float64.hpp"
 #include "sensor_msgs/msg/nav_sat_fix.hpp"
-#include "etsi_its_msgs/msg/vam.hpp"  // Where is the correct path for vam header?
+#include "etsi_its_vam_ts_msgs/msg/vam.hpp"  // Where is the correct path for vam header?
 
 using std::placeholders::_1;
 

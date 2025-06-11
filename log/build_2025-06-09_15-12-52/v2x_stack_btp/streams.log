@@ -1,0 +1,33 @@
+[0.016s] Invoking command in '/home/vboxuser/colcon_ws/src/v2x_stack/build/v2x_stack_btp': CMAKE_PREFIX_PATH=${CMAKE_PREFIX_PATH}:/opt/ros/jazzy DEBUGINFOD_URLS=https://debuginfod.ubuntu.com /usr/bin/cmake /home/vboxuser/colcon_ws/src/v2x_stack -DCMAKE_INSTALL_PREFIX=/home/vboxuser/colcon_ws/src/v2x_stack/install/v2x_stack_btp
+[0.033s] -- Found ament_cmake: 2.5.4 (/opt/ros/jazzy/share/ament_cmake/cmake)
+[0.349s] -- Found rclcpp: 28.1.9 (/opt/ros/jazzy/share/rclcpp/cmake)
+[0.384s] -- Found rosidl_generator_c: 4.6.5 (/opt/ros/jazzy/share/rosidl_generator_c/cmake)
+[0.396s] -- Found rosidl_generator_cpp: 4.6.5 (/opt/ros/jazzy/share/rosidl_generator_cpp/cmake)
+[0.410s] -- Using all available rosidl_typesupport_c: rosidl_typesupport_fastrtps_c;rosidl_typesupport_introspection_c
+[0.436s] -- Using all available rosidl_typesupport_cpp: rosidl_typesupport_fastrtps_cpp;rosidl_typesupport_introspection_cpp
+[0.543s] -- Found rmw_implementation_cmake: 7.3.2 (/opt/ros/jazzy/share/rmw_implementation_cmake/cmake)
+[0.546s] -- Found rmw_fastrtps_cpp: 8.4.2 (/opt/ros/jazzy/share/rmw_fastrtps_cpp/cmake)
+[0.643s] -- Using RMW implementation 'rmw_fastrtps_cpp' as default
+[0.726s] -- Found rclcpp_components: 28.1.9 (/opt/ros/jazzy/share/rclcpp_components/cmake)
+[0.764s] -- Found std_msgs: 5.3.6 (/opt/ros/jazzy/share/std_msgs/cmake)
+[0.781s] -- Found rosidl_default_generators: 1.6.0 (/opt/ros/jazzy/share/rosidl_default_generators/cmake)
+[0.791s] -- Found rosidl_adapter: 4.6.5 (/opt/ros/jazzy/share/rosidl_adapter/cmake)
+[0.804s] [31mCMake Error at CMakeLists.txt:10 (find_package):
+[0.804s]   By not providing "Findros_etsi_its_msgs.cmake" in CMAKE_MODULE_PATH this
+[0.804s]   project has asked CMake to find a package configuration file provided by
+[0.804s]   "ros_etsi_its_msgs", but CMake did not find one.
+[0.805s] 
+[0.805s]   Could not find a package configuration file provided by "ros_etsi_its_msgs"
+[0.805s]   with any of the following names:
+[0.805s] 
+[0.805s]     ros_etsi_its_msgsConfig.cmake
+[0.805s]     ros_etsi_its_msgs-config.cmake
+[0.805s] 
+[0.805s]   Add the installation prefix of "ros_etsi_its_msgs" to CMAKE_PREFIX_PATH or
+[0.805s]   set "ros_etsi_its_msgs_DIR" to a directory containing one of the above
+[0.805s] -- Configuring incomplete, errors occurred!
+[0.805s]   files.  If "ros_etsi_its_msgs" provides a separate development package or
+[0.805s]   SDK, be sure it has been installed.
+[0.805s] 
+[0.805s] [0m
+[0.819s] Invoked command in '/home/vboxuser/colcon_ws/src/v2x_stack/build/v2x_stack_btp' returned '1': CMAKE_PREFIX_PATH=${CMAKE_PREFIX_PATH}:/opt/ros/jazzy DEBUGINFOD_URLS=https://debuginfod.ubuntu.com /usr/bin/cmake /home/vboxuser/colcon_ws/src/v2x_stack -DCMAKE_INSTALL_PREFIX=/home/vboxuser/colcon_ws/src/v2x_stack/install/v2x_stack_btp

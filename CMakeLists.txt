@@ -9,6 +9,7 @@ find_package(std_msgs REQUIRED)
 find_package(rosidl_default_generators REQUIRED)
 find_package(ros_etsi_its_msgs REQUIRED)
 find_package(etsi_its_msgs REQUIRED)
+find_package(etsi_its_vam_ts_msgs REQUIRED)
 find_package(builtin_interfaces REQUIRED)
 find_package(sensor_msgs REQUIRED)
 find_package(udp_msgs REQUIRED)
@@ -148,6 +149,7 @@ ament_target_dependencies(${PROJECT_NAME}_va_node
     ros_etsi_its_msgs
     sensor_msgs
     etsi_its_msgs
+    etsi_its_vam_ts_msgs
 )
 
 # Link against generated messages
