@@ -16,6 +16,7 @@
   <depend>rclcpp_components</depend>  
   <depend>ros_etsi_its_msgs</depend>
   <depend>etsi_its_msgs</depend>   <!-- Ros etsi msgs from RWTH Aachen -->
+  <depend>etsi_its_vam_ts_msgs</depend>
   <depend>udp_msgs</depend>
 
   <!-- Test dependencies -->

@@ -9,6 +9,7 @@ find_package(std_msgs REQUIRED)
 find_package(rosidl_default_generators REQUIRED)
 find_package(ros_etsi_its_msgs REQUIRED)
 find_package(etsi_its_msgs REQUIRED)
+find_package(etsi_its_vam_ts_msgs REQUIRED)
 find_package(builtin_interfaces REQUIRED)
 find_package(sensor_msgs REQUIRED)
 find_package(udp_msgs REQUIRED)
@@ -94,7 +95,6 @@ install(TARGETS ${PROJECT_NAME}_btp_data_node
 # Add executable
 add_executable(${PROJECT_NAME}_ca_node
     src/ca_message.cpp
-    src/vam_message.cpp
     src/ca_rx.cpp
 )
 
@@ -126,6 +126,37 @@ target_link_libraries(${PROJECT_NAME}_ca_node Vanetza::asn1 Vanetza::facilities)
 install(TARGETS ${PROJECT_NAME}_ca_node
     DESTINATION lib/${PROJECT_NAME}
 )
+
+
+##VAM
+# Add executable
+add_executable(${PROJECT_NAME}_va_node src/vam_tx.cpp)
+
+# Include directories
+target_include_directories(${PROJECT_NAME}_va_node 
+    PUBLIC 
+    include 
+    ${v2x_stack_INCLUDE_DIRS} # Is this the right directory or do we need to put the headerfiles into "include/" folder?
+    ${ros_etsi_its_msgs_INCLUDE_DIRS}
+)
+
+# Link against dependencies
+ament_target_dependencies(${PROJECT_NAME}_va_node
+    rclcpp
+    rclcpp_components
+    std_msgs
+    #v2x_stack
+    ros_etsi_its_msgs
+    sensor_msgs
+    etsi_its_msgs
+    etsi_its_vam_ts_msgs
+)
+
+# Link against generated messages
+rosidl_target_interfaces(${PROJECT_NAME}_va_node ${PROJECT_NAME} "rosidl_typesupport_cpp")
+
+# Link against Vanetza libraries
+target_link_libraries(${PROJECT_NAME}_va_node Vanetza::asn1 Vanetza::facilities)
 
 ##CPM 
 # Add executable
