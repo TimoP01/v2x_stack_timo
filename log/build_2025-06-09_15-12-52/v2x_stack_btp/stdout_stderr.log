@@ -1,0 +1,31 @@
+-- Found ament_cmake: 2.5.4 (/opt/ros/jazzy/share/ament_cmake/cmake)
+-- Found rclcpp: 28.1.9 (/opt/ros/jazzy/share/rclcpp/cmake)
+-- Found rosidl_generator_c: 4.6.5 (/opt/ros/jazzy/share/rosidl_generator_c/cmake)
+-- Found rosidl_generator_cpp: 4.6.5 (/opt/ros/jazzy/share/rosidl_generator_cpp/cmake)
+-- Using all available rosidl_typesupport_c: rosidl_typesupport_fastrtps_c;rosidl_typesupport_introspection_c
+-- Using all available rosidl_typesupport_cpp: rosidl_typesupport_fastrtps_cpp;rosidl_typesupport_introspection_cpp
+-- Found rmw_implementation_cmake: 7.3.2 (/opt/ros/jazzy/share/rmw_implementation_cmake/cmake)
+-- Found rmw_fastrtps_cpp: 8.4.2 (/opt/ros/jazzy/share/rmw_fastrtps_cpp/cmake)
+-- Using RMW implementation 'rmw_fastrtps_cpp' as default
+-- Found rclcpp_components: 28.1.9 (/opt/ros/jazzy/share/rclcpp_components/cmake)
+-- Found std_msgs: 5.3.6 (/opt/ros/jazzy/share/std_msgs/cmake)
+-- Found rosidl_default_generators: 1.6.0 (/opt/ros/jazzy/share/rosidl_default_generators/cmake)
+-- Found rosidl_adapter: 4.6.5 (/opt/ros/jazzy/share/rosidl_adapter/cmake)
+[31mCMake Error at CMakeLists.txt:10 (find_package):
+  By not providing "Findros_etsi_its_msgs.cmake" in CMAKE_MODULE_PATH this
+  project has asked CMake to find a package configuration file provided by
+  "ros_etsi_its_msgs", but CMake did not find one.
+
+  Could not find a package configuration file provided by "ros_etsi_its_msgs"
+  with any of the following names:
+
+    ros_etsi_its_msgsConfig.cmake
+    ros_etsi_its_msgs-config.cmake
+
+  Add the installation prefix of "ros_etsi_its_msgs" to CMAKE_PREFIX_PATH or
+  set "ros_etsi_its_msgs_DIR" to a directory containing one of the above
+-- Configuring incomplete, errors occurred!
+  files.  If "ros_etsi_its_msgs" provides a separate development package or
+  SDK, be sure it has been installed.
+
+[0m
