@@ -9,15 +9,15 @@
 namespace v2x_stack_btp
 {
 
-class VaRxNode : public rclcpp::Node
+class CaRxNode : public rclcpp::Node
 {
 public:
-    explicit VaRxNode(const rclcpp::NodeOptions & options);
+    explicit CaRxNode(const rclcpp::NodeOptions & options);
     void onIndication(const msg::BtpDataIndication::ConstSharedPtr);
 
 private:
     
-    void publish(const vanetza::asn1::r1::Vam);
+    void publish(const vanetza::asn1::r1::Cam);
 
     uint16_t port_;
     rclcpp::Subscription<msg::BtpDataIndication>::SharedPtr sub_btp_;
