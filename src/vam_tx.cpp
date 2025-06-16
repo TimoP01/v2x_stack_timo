@@ -25,9 +25,11 @@ public:
 
 
         // Timer: alle 1 Sekunde ros2vam Nachricht senden
-        timer_ = this->create_wall_timer(
+        auto timer_ = this->create_wall_timer(
             std::chrono::seconds(1),
-            std::bind(&VamTx::publish_vam_message, this));
+            [this]() {
+                this->publish_vam_message(latest_latitude_, latest_longitude_, latest_altitude_, latest_heading_);
+            });
 
         RCLCPP_INFO(this->get_logger(), "VamTx Node gestartet.");
     }
@@ -43,11 +45,11 @@ public:
 
         etsi_its_vam_ts_msgs::msg::VAM vam_msg;
         vam_msg.header.value.protocol_version.value = 3;
-        vam_msg.header.value.message_id = 16;
+        vam_msg.header.value.message_id.value = 16;
         vam_msg.header.value.station_id.value = 1994;
 
         //payload
-        //
+        // 
         // vam_msg.vam.generationalDeltaTime.value = ?; 
         // vam_msg.vam.vamParameters.basicContainer.stationType.value = ?;
         vam_msg.vam.vam_parameters.basic_container.reference_position.latitude.value = latitude;
@@ -69,8 +71,10 @@ public:
 
         vam_pub_->publish(vam_msg);
 
-        RCLCPP_INFO(this->get_logger(), "Custom VAM gesendet: [%.6f, %.6f, %.2f | %.2f°]",
-                    vam_msg.latitude, vam_msg.longitude, vam_msg.altitude, vam_msg.heading);
+        RCLCPP_INFO(this->get_logger(), "Custom VAM gesendet: [%.6d, %.6d | %.2d]",
+        vam_msg.vam.vam_parameters.basic_container.reference_position.latitude.value,
+        vam_msg.vam.vam_parameters.basic_container.reference_position.longitude.value,
+        vam_msg.vam.vam_parameters.vru_high_frequency_container.heading.value.value);
     }
 
 private:
