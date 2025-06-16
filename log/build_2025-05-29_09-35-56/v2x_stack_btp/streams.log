@@ -1,0 +1,48 @@
+[0.012s] Invoking command in '/home/vboxuser/colcon_ws/src/v2x_stack/build/v2x_stack_btp': CMAKE_PREFIX_PATH=${CMAKE_PREFIX_PATH}:/opt/ros/jazzy DEBUGINFOD_URLS=https://debuginfod.ubuntu.com /usr/bin/cmake /home/vboxuser/colcon_ws/src/v2x_stack -DCMAKE_INSTALL_PREFIX=/home/vboxuser/colcon_ws/src/v2x_stack/install/v2x_stack_btp
+[0.209s] -- The C compiler identification is GNU 13.3.0
+[0.371s] -- The CXX compiler identification is GNU 13.3.0
+[0.407s] -- Detecting C compiler ABI info
+[0.574s] -- Detecting C compiler ABI info - done
+[0.583s] -- Check for working C compiler: /usr/bin/cc - skipped
+[0.585s] -- Detecting C compile features
+[0.588s] -- Detecting C compile features - done
+[0.601s] -- Detecting CXX compiler ABI info
+[0.750s] -- Detecting CXX compiler ABI info - done
+[0.764s] -- Check for working CXX compiler: /usr/bin/c++ - skipped
+[0.764s] -- Detecting CXX compile features
+[0.764s] -- Detecting CXX compile features - done
+[0.774s] -- Found ament_cmake: 2.5.4 (/opt/ros/jazzy/share/ament_cmake/cmake)
+[0.960s] -- Found Python3: /usr/bin/python3 (found version "3.12.3") found components: Interpreter 
+[1.155s] -- Found rclcpp: 28.1.9 (/opt/ros/jazzy/share/rclcpp/cmake)
+[1.245s] -- Found rosidl_generator_c: 4.6.5 (/opt/ros/jazzy/share/rosidl_generator_c/cmake)
+[1.268s] -- Found rosidl_generator_cpp: 4.6.5 (/opt/ros/jazzy/share/rosidl_generator_cpp/cmake)
+[1.299s] -- Using all available rosidl_typesupport_c: rosidl_typesupport_fastrtps_c;rosidl_typesupport_introspection_c
+[1.337s] -- Using all available rosidl_typesupport_cpp: rosidl_typesupport_fastrtps_cpp;rosidl_typesupport_introspection_cpp
+[1.482s] -- Found rmw_implementation_cmake: 7.3.2 (/opt/ros/jazzy/share/rmw_implementation_cmake/cmake)
+[1.490s] -- Found rmw_fastrtps_cpp: 8.4.2 (/opt/ros/jazzy/share/rmw_fastrtps_cpp/cmake)
+[1.654s] -- Found OpenSSL: /usr/lib/x86_64-linux-gnu/libcrypto.so (found version "3.0.13")  
+[1.683s] -- Found FastRTPS: /opt/ros/jazzy/include (Required is at least version "2.13") 
+[1.711s] -- Using RMW implementation 'rmw_fastrtps_cpp' as default
+[1.851s] -- Found rclcpp_components: 28.1.9 (/opt/ros/jazzy/share/rclcpp_components/cmake)
+[1.909s] -- Found std_msgs: 5.3.6 (/opt/ros/jazzy/share/std_msgs/cmake)
+[1.939s] -- Found rosidl_default_generators: 1.6.0 (/opt/ros/jazzy/share/rosidl_default_generators/cmake)
+[1.962s] -- Found rosidl_adapter: 4.6.5 (/opt/ros/jazzy/share/rosidl_adapter/cmake)
+[1.977s] [31mCMake Error at CMakeLists.txt:10 (find_package):
+[1.977s]   By not providing "Findros_etsi_its_msgs.cmake" in CMAKE_MODULE_PATH this
+[1.977s]   project has asked CMake to find a package configuration file provided by
+[1.978s] -- Configuring incomplete, errors occurred!
+[1.979s]   "ros_etsi_its_msgs", but CMake did not find one.
+[1.979s] 
+[1.979s]   Could not find a package configuration file provided by "ros_etsi_its_msgs"
+[1.979s]   with any of the following names:
+[1.979s] 
+[1.979s]     ros_etsi_its_msgsConfig.cmake
+[1.979s]     ros_etsi_its_msgs-config.cmake
+[1.980s] 
+[1.980s]   Add the installation prefix of "ros_etsi_its_msgs" to CMAKE_PREFIX_PATH or
+[1.980s]   set "ros_etsi_its_msgs_DIR" to a directory containing one of the above
+[1.980s]   files.  If "ros_etsi_its_msgs" provides a separate development package or
+[1.980s]   SDK, be sure it has been installed.
+[1.980s] 
+[1.980s] [0m
+[1.990s] Invoked command in '/home/vboxuser/colcon_ws/src/v2x_stack/build/v2x_stack_btp' returned '1': CMAKE_PREFIX_PATH=${CMAKE_PREFIX_PATH}:/opt/ros/jazzy DEBUGINFOD_URLS=https://debuginfod.ubuntu.com /usr/bin/cmake /home/vboxuser/colcon_ws/src/v2x_stack -DCMAKE_INSTALL_PREFIX=/home/vboxuser/colcon_ws/src/v2x_stack/install/v2x_stack_btp
