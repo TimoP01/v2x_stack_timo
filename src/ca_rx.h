@@ -22,7 +22,8 @@ private:
     uint16_t port_;
     rclcpp::Subscription<msg::BtpDataIndication>::SharedPtr sub_btp_;
     //rclcpp::Publisher<ros_etsi_its_msgs::msg::CAM>pub_cam_;
-    std::shared_ptr<rclcpp::Publisher<ros_etsi_its_msgs::msg::VAM>> pub_vam_; // Where is the constructor for VAM????
+    std::shared_ptr<rclcpp::Publisher<ros_etsi_its_msgs::msg::CAM>> pub_cam_; // Where is the constructor for VAM????
+
     rclcpp::Node::SharedPtr node_;
 };
 

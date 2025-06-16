@@ -9,10 +9,12 @@
 namespace v2x_stack_btp
 {
 
-class CaRxNode : public rclcpp::Node
+
+class VaRxNode : public rclcpp::Node
 {
 public:
-    explicit CaRxNode(const rclcpp::NodeOptions & options);
+    explicit VaRxNode(const rclcpp::NodeOptions & options);
+
     void onIndication(const msg::BtpDataIndication::ConstSharedPtr);
 
 private:
