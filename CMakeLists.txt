@@ -158,6 +158,11 @@ rosidl_target_interfaces(${PROJECT_NAME}_va_node ${PROJECT_NAME} "rosidl_typesup
 # Link against Vanetza libraries
 target_link_libraries(${PROJECT_NAME}_va_node Vanetza::asn1 Vanetza::facilities)
 
+# Install targets
+install(TARGETS ${PROJECT_NAME}_va_node
+    DESTINATION lib/${PROJECT_NAME}
+)
+
 ##CPM 
 # Add executable
 add_executable(${PROJECT_NAME}_cp_node
