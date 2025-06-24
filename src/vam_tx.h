@@ -1,32 +1,27 @@
 #pragma once
 
-#include "rclcpp/rclcpp.hpp"
-#include "std_msgs/msg/float64.hpp"
-#include "sensor_msgs/msg/nav_sat_fix.hpp"
-#include "etsi_its_vam_ts_msgs/msg/vam.hpp"
+#include <rclcpp/rclcpp.hpp>
+#include <vanetza/asn1/cpm.hpp>
+#include <v2x_stack_btp/msg/btp_data_indication.hpp>
+#include <ros_etsi_its_msgs/msg/cpm.hpp>
+#include <cstdint>
 
 namespace v2x_stack_btp
 {
 
-class VamTxNode : public rclcpp::Node
+class CpRxNode : public rclcpp::Node
 {
 public:
-    explicit VamTxNode(const rclcpp::NodeOptions & options);
-
-    void onPosition(sensor_msgs::msg::NavSatFix::ConstSharedPtr position);
-    void onHeading(std_msgs::msg::Float64::ConstSharedPtr heading);
-    void publish();
-
+    //explicit CpRxNode(const rclcpp::NodeOptions & options);
+    //void onIndication(const msg::BtpDataIndication::ConstSharedPtr);
+    uint16_t port_;
+    rclcpp::Subscription<msg::BtpDataIndication>::SharedPtr sub_btp_;    
+    std::shared_ptr<rclcpp::Publisher<ros_etsi_its_msgs::msg::CPM>> pub_cpm_;
+    rclcpp::Node::SharedPtr node_;
 private:
-    rclcpp::Publisher<etsi_its_vam_ts_msgs::msg::VAM>::SharedPtr vam_pub_;
+    
+    //void publish(const vanetza::asn1::r1::Cpm&);
 
-    double latest_latitude_ = 0.0;
-    double latest_longitude_ = 0.0;
-    double latest_altitude_ = 0.0;
-    double latest_heading_ = 0.0;
 
-    bool position_received_ = false;
-    bool heading_received_ = false;
 };
-
-} // namespace v2x_stack_btp
+}

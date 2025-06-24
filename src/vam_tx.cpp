@@ -1,90 +1,123 @@
-#include "vam_tx.h"
-#include <vanetza/btp/ports.hpp>  // falls benötigt
+#include <memory>
+#include "rclcpp/rclcpp.hpp"
+#include "std_msgs/msg/float64.hpp"
+#include "sensor_msgs/msg/nav_sat_fix.hpp"
+#include "etsi_its_vam_ts_msgs/msg/vam.hpp"  // Where is the correct path for vam header?
 
-namespace v2x_stack_btp
-{
+using std::placeholders::_1;
 
-VamTxNode::VamTxNode(const rclcpp::NodeOptions & options)
-: Node("vam_tx_node", options)
+class VamTx : public rclcpp::Node
 {
-}
-
-void VamTxNode::onPosition(sensor_msgs::msg::NavSatFix::ConstSharedPtr position)
-{
-    if (position->status.status != sensor_msgs::msg::NavSatStatus::STATUS_NO_FIX)
+public:
+    VamTx() : Node("vam_tx_node")
     {
-        RCLCPP_INFO(this->get_logger(), "Position empfangen: [%.6f, %.6f, %.2f]",
-                    position->latitude, position->longitude, position->altitude);
-        latest_latitude_ = position->latitude;
-        latest_longitude_ = position->longitude;
-        latest_altitude_ = position->altitude;
-        position_received_ = true;
-    }
-    else
-    {
-        RCLCPP_WARN(this->get_logger(), "Kein GPS-Fix.");
-    }
-}
+        // Subscription auf "position"
+        position_sub_ = this->create_subscription<sensor_msgs::msg::NavSatFix>(
+            "position", 10, std::bind(&VamTx::position_update_callback, this, _1));
 
-void VamTxNode::onHeading(std_msgs::msg::Float64::ConstSharedPtr heading)
-{
-    latest_heading_ = heading->data;
-    heading_received_ = true;
-    RCLCPP_INFO(this->get_logger(), "Heading empfangen: %.2f Grad", heading->data);
-}
+        // Subscription auf "heading"
+        heading_sub_ = this->create_subscription<std_msgs::msg::Float64>(
+            "heading", 10, std::bind(&VamTx::heading_update_callback, this, _1));
 
-void VamTxNode::publish()
-{
-    if (!position_received_ || !heading_received_)
-    {
-        RCLCPP_WARN_THROTTLE(this->get_logger(), *this->get_clock(), 5000,
-            "Warte auf erste Positions- und Heading-Daten...");
-        return;
-    }
+        // Publisher für ros2vam Nachricht
 
-    auto msg = std::make_shared<etsi_its_vam_ts_msgs::msg::VAM>();
-
-    msg->header.value.protocol_version.value = 3;
-    msg->header.value.message_id.value = 16;
-    msg->header.value.station_id.value = 1994;
-
-    msg->vam.vam_parameters.basic_container.reference_position.latitude.value = latest_latitude_;
-    msg->vam.vam_parameters.basic_container.reference_position.longitude.value = latest_longitude_;
-
-    msg->vam.vam_parameters.vru_high_frequency_container.heading.value.value = latest_heading_;
-
-    RCLCPP_INFO(this->get_logger(), "VAM gesendet: [%.6f, %.6f | %.2f]",
-        latest_latitude_, latest_longitude_, latest_heading_);
-
-    if (!vam_pub_)
-    {
         vam_pub_ = this->create_publisher<etsi_its_vam_ts_msgs::msg::VAM>("ros2vam", 10);
+
+
+        // Timer: alle 1 Sekunde ros2vam Nachricht senden
+        auto timer_ = this->create_wall_timer(
+            std::chrono::seconds(1),
+            [this]() {
+                this->publish_vam_message(latest_latitude_, latest_longitude_, latest_altitude_, latest_heading_);
+            });
+
+        RCLCPP_INFO(this->get_logger(), "VamTx Node gestartet.");
     }
 
-    vam_pub_->publish(*msg);
-}
+    void publish_vam_message(double latitude, double longitude, double altitude, double heading)
+    {
 
-} // namespace v2x_stack_btp
+        if (!position_received_ || !heading_received_) {
+            RCLCPP_WARN_THROTTLE(this->get_logger(), *this->get_clock(), 5000,
+                                 "Warte auf erste Position und Heading-Daten...");
+            return;
+        }
 
-// ---------- main ----------
+        etsi_its_vam_ts_msgs::msg::VAM vam_msg;
+        vam_msg.header.value.protocol_version.value = 3;
+        vam_msg.header.value.message_id.value = 16;
+        vam_msg.header.value.station_id.value = 1994;
+
+        //payload
+        // 
+        // vam_msg.vam.generationalDeltaTime.value = ?; 
+        // vam_msg.vam.vamParameters.basicContainer.stationType.value = ?;
+        vam_msg.vam.vam_parameters.basic_container.reference_position.latitude.value = latitude;
+        vam_msg.vam.vam_parameters.basic_container.reference_position.longitude.value = longitude;
+
+        // vam_msg.vam.vamParameters.basicContainer.referencePosition.altitude.altitudeValue = 800001; 
+        // vam_msg.vam.vamParameters.basicContainer.referencePosition.altitude.altitudeConfidence.value = 15; 
+        // vam_msg.vam.vamParameters.basicContainer.referencePosition.positionConfidenceEllipse.semiMajorAxisLength.value = 4095;
+        // vam_msg.vam.vamParameters.basicContainer.referencePosition.positionConfidenceEllipse.semiMinorAxisLength.value = 4095; 
+        // vam_msg.vam.vamParameters.basicContainer.referencePosition.positionConfidenceEllipse.semiMajorAxisOrientation.value = 3601; 
+        vam_msg.vam.vam_parameters.vru_high_frequency_container.heading.value.value = heading;
+
+        // vam_msg.vam.vamParameters.VruHighFrequencyContainer.heading.confidence.value = ;
+        // vam_msg.vam.vamParameters.VruHighFrequencyContainer.speed.speedvalue.value = ; 
+        // vam_msg.vam.vamParameters.VruHighFrequencyContainer.speed.speedconfidence.value = ; 
+
+        // vam_msg.vam.vamParameters.VruHighFrequencyContainer.longitudinalAcceleration.longitudinalAccelerationValue.value = ;
+        // vam_msg.vam.vamParameters.VruHighFrequencyContainer.longitudinalAcceleration.longitudinalAccelerationConfidence.value = ;
+
+        vam_pub_->publish(vam_msg);
+
+        RCLCPP_INFO(this->get_logger(), "Custom VAM gesendet: [%.6d, %.6d | %.2d]",
+        vam_msg.vam.vam_parameters.basic_container.reference_position.latitude.value,
+        vam_msg.vam.vam_parameters.basic_container.reference_position.longitude.value,
+        vam_msg.vam.vam_parameters.vru_high_frequency_container.heading.value.value);
+    }
+
+private:
+    void position_update_callback(const sensor_msgs::msg::NavSatFix::SharedPtr msg)
+    {
+        latest_latitude_ = msg->latitude;
+        latest_longitude_ = msg->longitude;
+        latest_altitude_ = msg->altitude;
+        position_received_ = true;
+
+        RCLCPP_INFO(this->get_logger(), "Position empfangen: [%.6f, %.6f, %.2f]",
+                    msg->latitude, msg->longitude, msg->altitude);
+    }
+
+    void heading_update_callback(const std_msgs::msg::Float64::SharedPtr msg)
+    {
+        latest_heading_ = msg->data;
+        heading_received_ = true;
+
+        RCLCPP_INFO(this->get_logger(), "Heading empfangen: %.2f Grad", msg->data);
+    }
+
+
+    // Membervariablen
+    rclcpp::Subscription<sensor_msgs::msg::NavSatFix>::SharedPtr position_sub_;
+    rclcpp::Subscription<std_msgs::msg::Float64>::SharedPtr heading_sub_;
+
+    rclcpp::Publisher<etsi_its_vam_ts_msgs::msg::VAM>::SharedPtr vam_pub_;
+
+
+    double latest_latitude_ = 0.0;
+    double latest_longitude_ = 0.0;
+    double latest_altitude_ = 0.0;
+    double latest_heading_ = 0.0;
+
+    bool position_received_ = false;
+    bool heading_received_ = false;
+};
+
 int main(int argc, char *argv[])
 {
     rclcpp::init(argc, argv);
-    RCLCPP_INFO(rclcpp::get_logger("rclcpp"), "Starting VAM TX node");
-
-    auto node = std::make_shared<v2x_stack_btp::VamTxNode>(rclcpp::NodeOptions());
-
-    auto sub_position = node->create_subscription<sensor_msgs::msg::NavSatFix>(
-        "position", 10, std::bind(&v2x_stack_btp::VamTxNode::onPosition, node, std::placeholders::_1));
-
-    auto sub_heading = node->create_subscription<std_msgs::msg::Float64>(
-        "heading", 10, std::bind(&v2x_stack_btp::VamTxNode::onHeading, node, std::placeholders::_1));
-
-    auto timer = node->create_wall_timer(
-        std::chrono::seconds(1),
-        std::bind(&v2x_stack_btp::VamTxNode::publish, node));
-
-    rclcpp::spin(node);
+    rclcpp::spin(std::make_shared<VamTx>());
     rclcpp::shutdown();
     return 0;
 }
