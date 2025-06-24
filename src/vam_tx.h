@@ -1,27 +1,41 @@
 #pragma once
 
 #include <rclcpp/rclcpp.hpp>
-#include <vanetza/asn1/cpm.hpp>
-#include <v2x_stack_btp/msg/btp_data_indication.hpp>
-#include <ros_etsi_its_msgs/msg/cpm.hpp>
-#include <cstdint>
+#include <sensor_msgs/msg/nav_sat_fix.hpp>
+#include <std_msgs/msg/float64.hpp>
+#include <etsi_its_vam_ts_msgs/msg/vam.hpp>
 
 namespace v2x_stack_btp
 {
 
-class CpRxNode : public rclcpp::Node
+class VamTx : public rclcpp::Node
 {
 public:
-    //explicit CpRxNode(const rclcpp::NodeOptions & options);
-    //void onIndication(const msg::BtpDataIndication::ConstSharedPtr);
-    uint16_t port_;
-    rclcpp::Subscription<msg::BtpDataIndication>::SharedPtr sub_btp_;    
-    std::shared_ptr<rclcpp::Publisher<ros_etsi_its_msgs::msg::CPM>> pub_cpm_;
-    rclcpp::Node::SharedPtr node_;
+    VamTx();
+
 private:
-    
-    //void publish(const vanetza::asn1::r1::Cpm&);
+    void position_update_callback(const sensor_msgs::msg::NavSatFix::SharedPtr msg);
+    void heading_update_callback(const std_msgs::msg::Float64::SharedPtr msg);
+    void publish_vam_message(double latitude, double longitude, double altitude, double heading);
 
+    // Subscriptions
+    rclcpp::Subscription<sensor_msgs::msg::NavSatFix>::SharedPtr position_sub_;
+    rclcpp::Subscription<std_msgs::msg::Float64>::SharedPtr heading_sub_;
 
+    // Publisher
+    rclcpp::Publisher<etsi_its_vam_ts_msgs::msg::VAM>::SharedPtr vam_pub_;
+
+    // Timer
+    rclcpp::TimerBase::SharedPtr timer_;
+
+    // Daten
+    double latest_latitude_ = 0.0;
+    double latest_longitude_ = 0.0;
+    double latest_altitude_ = 0.0;
+    double latest_heading_ = 0.0;
+
+    bool position_received_ = false;
+    bool heading_received_ = false;
 };
-}
+
+} // namespace v2x_stack_btp

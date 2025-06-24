@@ -48,27 +48,10 @@ public:
         vam_msg.header.value.message_id.value = 16;
         vam_msg.header.value.station_id.value = 1994;
 
-        //payload
-        // 
-        // vam_msg.vam.generationalDeltaTime.value = ?; 
-        // vam_msg.vam.vamParameters.basicContainer.stationType.value = ?;
         vam_msg.vam.vam_parameters.basic_container.reference_position.latitude.value = latitude;
         vam_msg.vam.vam_parameters.basic_container.reference_position.longitude.value = longitude;
 
-        // vam_msg.vam.vamParameters.basicContainer.referencePosition.altitude.altitudeValue = 800001; 
-        // vam_msg.vam.vamParameters.basicContainer.referencePosition.altitude.altitudeConfidence.value = 15; 
-        // vam_msg.vam.vamParameters.basicContainer.referencePosition.positionConfidenceEllipse.semiMajorAxisLength.value = 4095;
-        // vam_msg.vam.vamParameters.basicContainer.referencePosition.positionConfidenceEllipse.semiMinorAxisLength.value = 4095; 
-        // vam_msg.vam.vamParameters.basicContainer.referencePosition.positionConfidenceEllipse.semiMajorAxisOrientation.value = 3601; 
         vam_msg.vam.vam_parameters.vru_high_frequency_container.heading.value.value = heading;
-
-        // vam_msg.vam.vamParameters.VruHighFrequencyContainer.heading.confidence.value = ;
-        // vam_msg.vam.vamParameters.VruHighFrequencyContainer.speed.speedvalue.value = ; 
-        // vam_msg.vam.vamParameters.VruHighFrequencyContainer.speed.speedconfidence.value = ; 
-
-        // vam_msg.vam.vamParameters.VruHighFrequencyContainer.longitudinalAcceleration.longitudinalAccelerationValue.value = ;
-        // vam_msg.vam.vamParameters.VruHighFrequencyContainer.longitudinalAcceleration.longitudinalAccelerationConfidence.value = ;
-
         vam_pub_->publish(vam_msg);
 
         RCLCPP_INFO(this->get_logger(), "Custom VAM gesendet: [%.6d, %.6d | %.2d]",
