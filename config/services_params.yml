@@ -1,6 +1,6 @@
 services:
   ca_service:
-    enabled: true
+    enabled: false
     executable: v2x_stack_btp_ca_node
     package: v2x_stack_btp
     name: v2x_stack_btp_ca_node
@@ -19,3 +19,8 @@ services:
     executable: v2x_stack_btp_den_node
     package: v2x_stack_btp
     name: v2x_stack_btp_den_node
+  va_service:
+    enabled: true
+    executable: v2x_stack_btp_va_node
+    package: v2x_stack_btp
+    name: v2x_stack_btp_va_node

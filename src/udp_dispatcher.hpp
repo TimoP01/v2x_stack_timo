@@ -22,14 +22,21 @@ public:
     //virtual void requestTransmission();
     //void indicate();
     void publish(const tUDPBTPDataIndMsg* ind);
-
-private:        
     void initialize();
+
+private:      
+    int socksd;
     
+    void receive_handler();
+
+    void send_handler(const udp_msgs::msg::UdpPacket::SharedPtr msg);
+
     struct sockaddr_in host_addr, ccu_addr;
     std::string ccu_ip;
     uint16_t ccu_port;
     uint16_t host_port;
+
+    rclcpp::Subscription<udp_msgs::msg::UdpPacket>::SharedPtr subscriber_;
 
     rclcpp::Node::SharedPtr node_;
     rclcpp::Publisher<v2x_stack_btp::msg::CohdaInd>::SharedPtr publisher_;

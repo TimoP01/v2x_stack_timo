@@ -1,6 +1,6 @@
 v2x_stack_btp:
   ros__parameters:
-    originating_ip: "172.16.2.1"   # IP address from which receive data
+    originating_ip: "172.16.2.2"   # IP address from which receive data
     originating_port: 4400         # Port to receive data
-    destination_ip: "172.16.2.1"      # IP address to send data
+    destination_ip: "172.16.2.2"      # IP address to send data
     destination_port: 4401            # Port to send data
