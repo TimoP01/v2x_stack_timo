@@ -54,19 +54,20 @@ public:
         // vam_msg.vam.vam_parameters = etsi_its_vam_ts_msgs::msg::VamParameters();
         // vam_msg.vam.vam_parameters.basic_container = etsi_its_vam_ts_msgs::msg::BasicContainer();
         // vam_msg.vam.vam_parameters.vru_high_frequency_container = etsi_its_vam_ts_msgs::msg::VruHighFrequencyContainer();
+        
 
         vam_msg.vam.vam_parameters.basic_container.station_type.value = 0;
-        
+
         // vam_msg.vam.vam_parameters.basic_container.reference_position.latitude.value = latitude;
         // vam_msg.vam.vam_parameters.basic_container.reference_position.longitude.value = longitude;
+
         // vam_msg.vam.vam_parameters.basic_container.reference_position.altitude.altitude_value.value = altitude;
+        // vam_msg.vam.vam_parameters.basic_container.reference_position.altitude.altitude_confidence.value = 0;
 
         // Statische Positionszuweisung zum testen
         vam_msg.vam.vam_parameters.basic_container.reference_position.latitude.value = 555555;
         vam_msg.vam.vam_parameters.basic_container.reference_position.longitude.value = 999999;
         vam_msg.vam.vam_parameters.basic_container.reference_position.altitude.altitude_value.value = 222;
-
-        // vam_msg.vam.vam_parameters.basic_container.reference_position.altitude.altitude_confidence.value = 0;
 
         vam_msg.vam.vam_parameters.vru_high_frequency_container.heading.value.value = heading;
 
